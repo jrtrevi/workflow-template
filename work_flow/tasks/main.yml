@@ -1,0 +1,18 @@
+---
+# tasks file for work_flow
+- name: grab info about ansible
+  ansible.builtin.uri:
+    url: ansible-tower.va.th.ten.sbx/api/v2/job_templates
+    user: admin
+    password:
+    return_content: yes
+  register: workflow
+
+- name: post info about templates to AAP
+  ansible.builtin.uri:
+    url: tower-test-ansible-tower-todd.apps.va.th.ten.sbx/api/v2/job_templates
+    user: admin
+    password:
+    method: POST 
+    body_format:
+    body: {{ workflow }}
